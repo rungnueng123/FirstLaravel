@@ -25,4 +25,28 @@ class MyuserController extends Controller
         $userbase->save();
         return redirect('/login');
     }
+
+    public function profilepage(Request $request){
+        $userinfo = $request->session()->get('userinfo');
+        $data = array(
+            'userinfo'=>$userinfo
+        );
+        return view('admin.profilepage')->with($data);
+    }
+
+    public function checklogin(Request $request){
+       $Username = $request->input('Username');
+       $Password = $request->input('Password');
+       //Check Found User
+        $UserRecord = Userbase::where('Username',$Username)->where('Password',$Password)->first();
+        if(!empty($UserRecord)){
+            $request->session()->put('userinfo', $UserRecord);//SESSION
+            return redirect('/profile');
+        }else{
+            return view('admin.loginpage');
+        }
+//        dd($UserRecord);
+
+    }
+
 }
