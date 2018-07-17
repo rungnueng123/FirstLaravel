@@ -12,7 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    echo '<pre>';
+    echo Session::get('userinfo');
+    echo '</pre>';
 });
 
 Route::get('/hello', function(){
@@ -21,8 +23,12 @@ Route::get('/hello', function(){
 
 Route::get('/register','MyuserController@registerpage');
 Route::get('/login','MyuserController@loginpage');
+Route::post('/login/checklogin', 'MyuserController@checklogin');
 
 Route::post('/saveregister','MyuserController@saveregisterpage');
+Route::get('/profile', 'MyuserController@profilepage');
+
+Route::post('/checklogin','MyuserController@checklogin');
 
 
 
